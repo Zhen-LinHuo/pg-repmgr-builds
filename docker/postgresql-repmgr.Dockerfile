@@ -24,9 +24,11 @@ RUN set -eux; \
 # repmgrd is the failover daemon; the image ships both `repmgr` (CLI) and
 # `repmgrd` (daemon). They are configured at runtime via the standard
 # /etc/repmgr.conf and the PGDATA-repmgr extension, not baked into the image.
+#
+# Smoke-test with `repmgr` only: `repmgrd` refuses to run as root (the Docker
+# build user), which is expected — it runs as the postgres user at runtime.
 RUN command -v repmgr && command -v repmgrd \
-    && repmgr --version \
-    && repmgrd --version
+    && repmgr --version
 
 LABEL org.opencontainers.image.title="postgresql-repmgr" \
       org.opencontainers.image.description="PostgreSQL 16 with repmgr (streaming replication manager)" \

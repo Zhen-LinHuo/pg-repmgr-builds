@@ -30,7 +30,7 @@
 ;;;   2. A PostgreSQL extension (.so) cannot be static — so repmgr.so is always
 ;;;      built shared; only the repmgr/repmgrd binaries are static.
 ;;;   3. guix's curl ships only libcurl.so (no .a), yet repmgr hard-requires
-;;;      -lcurl. We provide curl-static (my-pkgs/curl-static.scm) whose closure
+;;;      -lcurl. We provide curl-static (pkgs/pg-repmgr-builds/curl-static.scm) whose closure
 ;;;      collapses to openssl+zlib (both of which DO ship static outputs).
 
 (define-module (pg-repmgr-builds repmgr)
@@ -40,14 +40,15 @@
   #:use-module (guix gexp)                    ; #~ gexp literals in arguments
   #:use-module (guix utils)                   ; substitute-keyword-arguments
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (gnu packages compiler-tools)  ; flex (mandatory lexer)
+  #:use-module (gnu packages flex)            ; flex (mandatory lexer)
   #:use-module (gnu packages curl)            ; libcurl (PG_LDFLAGS -lcurl)
   #:use-module (gnu packages web)             ; json-c (PG_LDFLAGS -ljson-c)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages tls)             ; openssl (PGXS links -lssl -lcrypto)
   #:use-module (gnu packages compression)     ; zlib (-lz)
   #:use-module (gnu packages readline)        ; readline (-lreadline)
-  #:use-module (gnu packages databases))      ; postgresql-16
+  #:use-module (gnu packages databases)      ; postgresql-16
+  #:use-module (pg-repmgr-builds curl-static)) ; libcurl.a for the static build
 
 (define %repmgr-version "5.5.0")
 
