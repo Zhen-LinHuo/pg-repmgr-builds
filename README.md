@@ -27,9 +27,9 @@ against exactly the PostgreSQL the image runs.
 Built with [GNU Guix](https://guix.gnu.org/) from the recipes in
 [`pkgs/`](pkgs/):
 
-- [`pkgs/repmgr.scm`](pkgs/repmgr.scm) — defines `repmgr` (glibc) and
+- [`pkgs/pg-repmgr-builds/repmgr.scm`](pkgs/pg-repmgr-builds/repmgr.scm) — defines `repmgr` (glibc) and
   `repmgr-static`.
-- [`pkgs/curl-static.scm`](pkgs/curl-static.scm) — a static `libcurl`, needed
+- [`pkgs/pg-repmgr-builds/curl-static.scm`](pkgs/pg-repmgr-builds/curl-static.scm) — a static `libcurl`, needed
   because Guix's `curl` ships only `libcurl.so` while repmgr hard-requires
   `-lcurl`.
 

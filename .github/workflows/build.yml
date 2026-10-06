@@ -29,8 +29,9 @@ permissions:
 
 env:
   # PostgreSQL major.minor to build the image against (the image tag).
+  # GHCR requires lowercase repository names; GitHub owner logins are
+  # case-preserving (e.g. "Zhen-LinHuo"), so fold the owner to lowercase.
   PG_VERSION: "16.15"
-  IMAGE: ghcr.io/${{ github.repository_owner }}/postgresql-repmgr
 
 jobs:
   # ---------------------------------------------------------------------
@@ -113,6 +114,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Compute lowercase image name
+        # GHCR requires lowercase repository names; owner logins are
+        # case-preserving (e.g. "Zhen-LinHuo"), so fold owner to lowercase.
+        run: |
+          OWNER="$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
+          echo "IMAGE=ghcr.io/${OWNER}/postgresql-repmgr" >> "$GITHUB_ENV"
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
