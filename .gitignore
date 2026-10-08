@@ -1,0 +1,6 @@
+# graphlint runtime output (analysis DB + caches)
+.graphlint/
+
+# Guix build droppings, if a build is run from the repo root
+/guix-build-*.drv
+*.go

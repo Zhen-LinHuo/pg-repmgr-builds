@@ -8,7 +8,7 @@
 ;;; static-linking is its first-class design goal, and its getpwuid reads
 ;;; /etc/passwd directly (no NSS dlopen) — so a musl-static repmgr is both
 ;;; redistributable AND fully functional. This is the flavour for bare-metal
-;;; hosts (NAS/HC01) that must survive OS/libc upgrades.
+;;; hosts that must survive OS/libc upgrades.
 ;;;
 ;;; ARCHITECTURE: only the `repmgr`/`repmgrd` EXECUTABLES go musl-static.
 ;;; `repmgr.so` (the PG extension) stays glibc-shared — it's dlopen()ed by the
