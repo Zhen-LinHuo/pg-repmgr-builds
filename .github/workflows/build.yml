@@ -2,7 +2,7 @@
 #
 # Three artifacts:
 #   1. glibc/dynamic repmgr binary  (GNU Guix build)
-#   2. fully static repmgr binary   (GNU Guix build)
+#   2. musl static repmgr binary    (GNU Guix build, static execs + glibc .so)
 #   3. PostgreSQL 16 + repmgr image  (docker build -> GHCR)
 #
 # The Guix jobs run on ubuntu-latest with Guix installed (the "install Guix in
@@ -47,7 +47,9 @@ jobs:
           - flavour: glibc
             target: "(@ (pg-repmgr-builds repmgr) repmgr)"
           - flavour: static
-            target: "(@ (pg-repmgr-builds repmgr) repmgr-static)"
+            # musl static executable (replaces the glibc static flavour):
+            # static executables + glibc-linked repmgr.so in one package.
+            target: "(@ (pg-repmgr-builds repmgr-musl) repmgr-musl)"
     steps:
       - uses: actions/checkout@v4
 
